@@ -6,6 +6,8 @@ const {login, logout, register, getAllUsers, getMyProfile } = require("../contro
 
 const isAuthenticated = require("../middlewares/auth.js")
 
+
+
 const router = express.Router();
 router.use(cookieParser());
 
@@ -17,6 +19,9 @@ router.post("/login",login);
 router.get("/me", isAuthenticated, getMyProfile);
 router.get("/logout",logout);
 
-
+// router.get('/test-error', (req, res, next) => {
+//     const err = new ErrorHandler("Custom error message", 404);
+//     next(err);
+// });
 
 module.exports = router;
