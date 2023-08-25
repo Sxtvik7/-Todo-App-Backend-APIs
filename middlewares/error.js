@@ -1,3 +1,5 @@
+//----Getting Some Error While Using this Middleware will fix that in Future/ not using it
+
 class ErrorHandler extends Error {
     constructor(errorMessage, statusCode){
         super(errorMessage);     //super basiclly is constructor of parent class

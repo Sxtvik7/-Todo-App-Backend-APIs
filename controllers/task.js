@@ -1,5 +1,5 @@
-const ErrorHandler = require("../middlewares/error.js");
-const errorMiddleware = require("../middlewares/error.js")
+// const ErrorHandler = require("../middlewares/error.js");
+// const errorMiddleware = require("../middlewares/error.js")
 
 // const { CustomErrorHandler, errorMiddleware } = require("../middlewares/error.js")
 
@@ -39,13 +39,11 @@ try {
     
     const tasks = await task.findById(req.params.id)
     if(!tasks)
-    return next(new ErrorHandler("Task Not Found", 400));
+    // return next(new ErrorHandler("Task Not Found", 400));
+    return res.status(404).json({success :false, error: "Task Not Found, Invalid ID"})
 
-    
-    // return res.status(404).json({
-    //     success:false,
-    //     message:"Invalid Id",
-    // });
+    // return 
+    // res.status(400).json({ success:false, message:"Invalid Id"});
 
     tasks.isCompleted = !tasks.isCompleted;
     await tasks.save();
@@ -64,8 +62,9 @@ const deleteTasks = async(req, res, next)=>{
     const tasks = await task.findById(req.params.id)
     // const tasks = false 
     if(!tasks) 
-    return next(new ErrorHandler("Task Not Found, Invalid ID", 404));
-
+    // return next(new ErrorHandler("Task Not Found, Invalid ID", 404));
+     return res.status(404).json({error: "Task Not Found, Invalid ID"})
+     
     await tasks.deleteOne()
 
     res.status(200).json({
