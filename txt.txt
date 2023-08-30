@@ -1,3 +1,19 @@
 "name":"",
 "email":"",
 "password":"",
+
+NODE_ENV=Development
+Development
+Production
+
+   // if(!user){
+  //   const errorResponse = {error: "Invalid Email or Password"};
+  //   console.log(errorResponse);
+  //   return res.status(400).json(errorResponse);
+  // }
+
+  // if(!isMatch){
+  //   const errorResponse = { error:"Invalid Email or Password"};
+  //   console.log(errorResponse);
+  //   return res.status(400).json(errorResponse);
+  // }

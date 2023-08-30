@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const setcookie = require("../utils/features.js");
 // const ErrorHandler = require("../middlewares/error.js");
 
-// const { CustomErrorHandler, errorMiddleware } = require("../middlewares/error.js")
+// const { ErrorHandler, errorMiddleware } = require("../middlewares/error.js")
 
 
 const getAllUsers = async (req, res) => {
@@ -22,17 +22,19 @@ const login = async (req, res, next)=>{
   const user = await details.findOne({email}).select("+password");
 
   if(!user)
-  //  return next(new ErrorHandler("Invalid E-mail or Password", 400));
-  return res.status(400).json({error: "User Not Found, Invalid Email or Password"})
-
+   //return next(new ErrorHandler("Invalid E-mail or Password", 400));
+  return res.status(400).json({error: "Invalid Email or Password"})
 
   const isMatch = await bcrypt.compare(String(password), String(user.password));
 
   if(!isMatch)
   //  return next(new ErrorHandler("Invalid E-mail or Password", 400));
-   return res.status(400).json({error: "User Not Found, Invalid Email or Password"})
+   return res.status(400).json({error: "Invalid Email or Password"})
+
+//---------------------------------------------------------------------
 
   setcookie(user, res, `Welcome back ${user.name}`,200)
+
  } catch (error) {
     next(error)
  }
@@ -46,14 +48,13 @@ const register = async (req, res, next) => {
 
   if(user)
       // return next(new ErrorHandler("User Already Exists", 400));
-      return res.status(400).json({error: "Email already exists, Proceed to login"})
-
-
+      return res.status(400).json({error: "Email already exists"})
+      
     const hashedPassword = await bcrypt.hash(password,10)
 
       user = await details.create({name, email, password:hashedPassword})
 
-  setcookie(user, res, `Registered Successfully ${user.name}`, 200)  
+  setcookie(user, res, `Registered Successfully ${user.name}`, 201) 
   } catch (error) {
     next(error)
   }     
